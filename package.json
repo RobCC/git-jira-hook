@@ -3,6 +3,9 @@
   "version": "0.1.0",
   "description": "Git hooks with Jira",
   "main": "index.js",
+  "bin": {
+    "git-jira-hooks": "bin/commit-msg.js"
+  },
   "scripts": {
     "build": "rollup -c",
     "test": "jest"
