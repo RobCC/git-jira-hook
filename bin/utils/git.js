@@ -3,7 +3,13 @@ const util = require('util');
 const fs = require('fs');
 
 function getCommitMessage(commitFile) {
-  const message = fs.readFileSync(commitFile, 'utf8').trim();
+  let message;
+
+  try {
+    message = fs.readFileSync(commitFile, 'utf8').trim();
+  } catch (e) {
+    console.error('Cannot read commit message file', commitFile);
+  }
 
   return [ message.split('\n')[0], message ];
 }

@@ -158,8 +158,8 @@ Using node (current):
 ```json
 "husky": {
   "hooks": {
-    "pre-commit": "sh githooks/pre-commit",
-    "commit-msg": "bin/commit-msg.js ${HUSKY_GIT_PARAMS}"
+    "pre-commit": "bin/pre-commit.js ${HUSKY_GIT_PARAMS}",
+    "commit-msg": "bin/commit-msg.js ${HUSKY_GIT_PARAMS} --projectId TEST --config 'dummy/hooks.config.js'"
   }
 }
 ```
