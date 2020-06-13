@@ -13,7 +13,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "bin/pre-commit.js ${HUSKY_GIT_PARAMS} --projectId TEST",
+      "pre-commit": "bin/pre-commit.js ${HUSKY_GIT_PARAMS}",
       "commit-msg": "bin/commit-msg.js ${HUSKY_GIT_PARAMS} --projectId TEST --config 'dummy/hooks.config.js'"
     }
   },
