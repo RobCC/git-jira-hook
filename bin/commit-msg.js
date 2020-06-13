@@ -9,6 +9,7 @@ const config = require('./utils/config/config');
 
 const {
   isSpecialCommit,
+  isMainBranch,
   isFormatCorrect,
   isTicketValid,
   getCommitType,
@@ -23,6 +24,7 @@ const CONFIG_PATH = argv.config;
 
 async function commitMsg() {
   const [firstLine, fullMessage] = git.getCommitMessage(COMMIT_FILE);
+  const branch = await git.getCurrentBranch();
 
   logger.loading('Checking commit message');
 
@@ -35,6 +37,15 @@ async function commitMsg() {
   if (isSpecialCommit(firstLine)) {
     logger.success('No need to add ticket', '', true);
     process.exit(0);
+  }
+
+  if (isMainBranch(branch, branchTypes.main)) {
+    logger.error(
+      'Cannot commit directly to the following branches',
+      branchTypes.main.join(', '),
+      true
+    );
+    process.exit(1);
   }
 
   const { hasFormat, messageTicket, commitType } = isFormatCorrect(firstLine);
@@ -82,8 +93,6 @@ async function commitMsg() {
   }
 
   logger.warn('Jira ticket is not on the commit message');
-
-  const branch = await git.getCurrentBranch();
 
   if (isOtherBranch(branch, branchTypes.nonTicket)) {
     logger.success('Working on a non JIRA related branch', branchTypes.nonTicket.join(', '));

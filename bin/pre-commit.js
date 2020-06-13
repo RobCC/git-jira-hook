@@ -27,8 +27,6 @@ async function checkBranch() {
     process.exit(1);
   }
 
-  // TODO: Display only on verbose
-  //logger.success('Current branch is not a main branch', '', true);
   process.exit(0);
 }
 
