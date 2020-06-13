@@ -112,6 +112,7 @@ By default it will look for `hooks.config.js` or `hooks.config.json` on the root
     "commit-msg": "bin/commit-msg.js ${HUSKY_GIT_PARAMS} --config 'dummy-folder/hooks.config.js'"
   }
 },
+```
 
 ## Yeah, cool. But HOW DOES IT WORK?
 
