@@ -1,5 +1,5 @@
 {
-  "name": "hooks-test",
+  "name": "git-jira-hooks",
   "version": "0.1.0",
   "description": "Git hooks with Jira",
   "main": "index.js",
