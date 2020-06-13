@@ -6,19 +6,21 @@
   "bin": {
     "git-jira-hooks": "bin/commit-msg.js"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RobCC/git-jira-hooks.git"
+  },
+  "bugs": {
+    "url": "https://github.com/RobCC/git-jira-hooks/issues"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "homepage": "https://github.com/RobCC/git-jira-hooks#readme",
   "scripts": {
     "build": "rollup -c",
     "test": "jest"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+ssh://git@bitbucket.org/jrobcc/hooks-test.git"
-  },
-
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "homepage": "https://bitbucket.org/jrobcc/hooks-test#readme",
   "dependencies": {
     "ajv": "^6.12.2",
     "app-root-path": "^3.0.0",
