@@ -14,12 +14,7 @@
     "type": "git",
     "url": "git+ssh://git@bitbucket.org/jrobcc/hooks-test.git"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "bin/pre-commit.js ${HUSKY_GIT_PARAMS}",
-      "commit-msg": "bin/commit-msg.js ${HUSKY_GIT_PARAMS} --projectId TEST --config 'dummy/hooks.config.js'"
-    }
-  },
+
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -27,7 +22,6 @@
   "dependencies": {
     "ajv": "^6.12.2",
     "app-root-path": "^3.0.0",
-    "husky": "^4.2.3",
     "lodash.merge": "^4.6.2",
     "yargs": "^15.3.1"
   },
