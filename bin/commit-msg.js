@@ -33,16 +33,16 @@ async function commitMsg() {
   dbugger.log('Config values:', configValues);
   logger.loading('Checking commit message');
 
+  if (isSpecialCommit(firstLine)) {
+    logger.success('No need to add ticket', '', true);
+  }
+
   if (isMainBranch(branch, branchTypes.main)) {
     logger.error(
       'Cannot commit directly to the following branches',
       branchTypes.main.join(', '),
       true
     );
-  }
-
-  if (isSpecialCommit(firstLine)) {
-    logger.success('No need to add ticket', '', true);
   }
 
   const { hasFormat, messageTicket, commitType } = hasCorrectFormat(firstLine);
