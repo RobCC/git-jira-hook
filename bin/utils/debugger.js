@@ -5,8 +5,6 @@ function setDebugMode(on) {
 }
 
 function log(...messages) {
-  console.log("DEBUG_MODE", DEBUG_MODE)
-
   if (!DEBUG_MODE) {
     return;
   }

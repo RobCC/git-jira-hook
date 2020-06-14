@@ -28,12 +28,10 @@ async function commitMsg() {
   dbugger.setDebugMode(DEBUG_MODE);
 
   const [firstLine, fullMessage] = git.getCommitMessage(COMMIT_FILE);
-  const branch = await git.getCurrentBranch();
+  const branch = git.getCurrentBranch();
 
   logger.loading('Checking commit message');
-
-  dbugger.log('(project id, config path)', PROJECT_ID, CONFIG_PATH);
-  dbugger.log('(current branch, first line, full message)', branch, firstLine, fullMessage);
+  dbugger.log('(firstLine, branch)', firstLine, branch);
 
   const {
     projectId,
@@ -106,7 +104,6 @@ async function commitMsg() {
   }
 
   const { isValid, branchTicket } = getTicketFromBranch(branch, projectId, branchTypes.ticket);
-
 
   dbugger.log('(isValid, branchTicket)', isValid, branchTicket);
 
