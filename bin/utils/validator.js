@@ -12,7 +12,7 @@
  */
 function isSpecialCommit(message) {
   const mergeCommitRegex = new RegExp('^Merge(d)?.*?$');
-  const versionCommitRegex = new RegExp('^[0-9]*\\.[0-9]*\\.[0-9].*$');
+  const versionCommitRegex = new RegExp('^v??[0-9]*\\.[0-9]*\\.[0-9]*.*$');
   const breakingChangeRegex = new RegExp('^BREAKING CHANGE: .*$');
 
   return !!(
