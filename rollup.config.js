@@ -9,6 +9,8 @@ export default {
   output: {
     file: 'build/commit-msg.js'
   },
+  inlineDynamicImports: true,
+  experimentalCodeSplitting: true,
   plugins: [
     // resolve({
     //   extensions: ['js'],
