@@ -27,8 +27,8 @@
   "scripts": {
     "build": "rollup -c",
     "test": "jest",
-    "prep": "npm run build && npm publish",
-    "prep:beta": "npm run build && npm publish --tag beta"
+    "release": "npm run build && npm publish",
+    "release:beta": "npm run build && npm publish --tag beta"
   },
   "husky": {
     "hooks": {
