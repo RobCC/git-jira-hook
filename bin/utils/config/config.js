@@ -87,7 +87,7 @@ function getConfigConstants(projectId, argsConfigName) {
     };
   }
 
-  dbugger.log('Getting config on:', configPath, isJSON ? 'as JSON' : 'as JS');
+  dbugger.log('Getting config on:', configPath);
 
   const config = getConfig(configPath, isJSON);
 

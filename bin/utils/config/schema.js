@@ -60,7 +60,7 @@ function displayErrors(errors) {
   }
 }
 
-function isConfigValid(config) {
+function isValid(config) {
   const isValid = ajv.validate(schema, config);
 
   if (isValid) {
@@ -73,5 +73,5 @@ function isConfigValid(config) {
 
 module.exports = {
   schema,
-  isConfigValid,
+  isValid,
 };

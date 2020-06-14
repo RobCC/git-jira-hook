@@ -13,7 +13,7 @@ export default {
   },
   // preserveModules: true,
   plugins: [
-    preserveShebangs(),
+    // preserveShebangs(),
     commonjs({
       dynamicRequireTargets: [
         './bin/utils/config/reader.js'
