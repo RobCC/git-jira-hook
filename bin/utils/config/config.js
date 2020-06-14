@@ -5,6 +5,7 @@ const fs = require('fs');
 const logger = require('../logger');
 const constants = require('./constants');
 
+const { getConstants } = constants;
 const ROOT = appRoot.toString();
 const CONFIG_DEFAULT_NAME_JSON = 'hooks.config.json';
 const CONFIG_DEFAULT_NAME_JS = 'hooks.config.js';
@@ -90,7 +91,7 @@ function getConfigConstants(projectId, argsConfigName) {
       logger.error('Config file not found. No project ID provided', '', true);
     }
 
-    const defaultConstants = constants.getConstants();
+    const defaultConstants = getConstants();
 
     logger.info('Config file not found. Using default values');
 
@@ -102,7 +103,7 @@ function getConfigConstants(projectId, argsConfigName) {
 
   const config = getConfig(configPath, isJSON);
 
-  return constants.getConstants(config);
+  return getConstants(config);
 }
 
 module.exports = {

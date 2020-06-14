@@ -30,7 +30,7 @@ function getCurrentBranch() {
 };
 
 module.exports = {
-  getCurrentBranch: getCurrentBranch,
-  getCommitMessage: getCommitMessage,
-  modifyCommitMessage: modifyCommitMessage
+  getCurrentBranch,
+  getCommitMessage,
+  modifyCommitMessage,
 };

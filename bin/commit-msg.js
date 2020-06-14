@@ -29,14 +29,13 @@ async function commitMsg() {
 
   const [firstLine, fullMessage] = git.getCommitMessage(COMMIT_FILE);
   const branch = git.getCurrentBranch();
-
-  logger.loading('Checking commit message');
-
   const {
     projectId,
     commitTypes,
     branchTypes
   } = config.getConfigConstants(PROJECT_ID, CONFIG_PATH);
+
+  logger.loading('Checking commit message');
 
   if (isMainBranch(branch, branchTypes.main)) {
     logger.error(
