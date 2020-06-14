@@ -1,4 +1,4 @@
-# Git hooks
+# Git hooks https://img.shields.io/npm/v/git-jira-hook?color=red&style=flat-square
 
 Git hooks for `commit-msg` and `pre-commit`.
 

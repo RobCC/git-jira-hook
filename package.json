@@ -1,17 +1,17 @@
 {
-  "name": "git-jira-hooks",
+  "name": "git-jira-hook",
   "version": "0.2.1",
   "description": "Git hook for Jira workflow",
   "main": "build/commit-msg.js",
   "bin": {
-    "git-jira-hooks": "build/commit-msg.js"
+    "git-jira-hook": "build/commit-msg.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/RobCC/git-jira-hooks.git"
+    "url": "git+https://github.com/RobCC/git-jira-hook.git"
   },
   "bugs": {
-    "url": "https://github.com/RobCC/git-jira-hooks/issues"
+    "url": "https://github.com/RobCC/git-jira-hook/issues"
   },
   "files": [
     "build"
@@ -23,7 +23,7 @@
   ],
   "author": "RobCC",
   "license": "ISC",
-  "homepage": "https://github.com/RobCC/git-jira-hooks#readme",
+  "homepage": "https://github.com/RobCC/git-jira-hook#readme",
   "scripts": {
     "build": "rollup -c",
     "test": "jest",
