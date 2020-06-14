@@ -22,7 +22,7 @@
     "hooks"
   ],
   "author": "RobCC",
-  "license": "ISC",
+  "license": "MIT",
   "homepage": "https://github.com/RobCC/git-jira-hook#readme",
   "scripts": {
     "build": "rollup -c",
