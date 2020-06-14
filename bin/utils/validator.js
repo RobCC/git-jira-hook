@@ -27,7 +27,7 @@ function isSpecialCommit(message) {
  * @param {string} message - Commit message
  * @returns {FormatResponse}
  */
-function isFormatCorrect(message) {
+function hasCorrectFormat(message) {
   const regex = new RegExp('^([a-z]+?)(?:\\((.*?-[0-9]+?)+\\))?: .*?$');
   const [
     hasFormat = false,
@@ -36,7 +36,7 @@ function isFormatCorrect(message) {
   ] = message.match(regex) || [];
 
   return {
-    hasFormat,
+    hasFormat: !!hasFormat,
     commitType,
     messageTicket
   };
@@ -93,7 +93,8 @@ function isMainBranch(branch, mainBranches) {
 }
 
 /**
- * Checks if the branch is a non ticket branch type
+ * Checks if the branch is a non ticket branch type. If it is,
+ * and if it has the ticket, returns it.
  * @param {string} branch - Current branch name
  * @param {string} projectId - Project id
  * @param {string[]} ticketBranches - List of branch types that should have ticket
@@ -101,15 +102,15 @@ function isMainBranch(branch, mainBranches) {
  */
 function getTicketFromBranch(branch, projectId, ticketBranches) {
   const regex = new RegExp(`^(?:${ticketBranches.join('|')})\\/(${projectId}-[0-9]+)(?:-(.*?))?$`);
-  const [isValid, ticket] = branch.match(regex) || [];
+  const [
+    isValid = false,
+    branchTicket = ''
+  ] = branch.match(regex) || [];
 
-  if (!isValid) {
-    return false;
-  }
-
-  // logger.success('Ticket found on branch name');
-
-  return ticket;
+  return {
+    isValid: !!isValid,
+    branchTicket
+  };
 }
 
 /**
@@ -132,7 +133,7 @@ function addTicketToCommit(firstLine, fullMessage, ticket, ticketCommitTypes) {
 
 module.exports = {
   isSpecialCommit,
-  isFormatCorrect,
+  hasCorrectFormat,
   isTicketValid,
   getCommitType,
   isOtherBranch,

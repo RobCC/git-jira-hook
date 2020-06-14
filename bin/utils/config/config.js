@@ -9,16 +9,6 @@ const ROOT = appRoot.toString();
 const CONFIG_DEFAULT_NAME_JSON = 'hooks.config.json';
 const CONFIG_DEFAULT_NAME_JS = 'hooks.config.js';
 
-let CONFIG_PATH;
-
-function setConfigPath(configPath) {
-  CONFIG_PATH = configPath;
-}
-
-function getConfigPath() {
-  return CONFIG_PATH;
-}
-
 function useDefaultConfigNames(argsConfigName) {
   return !fs.existsSync(path.join(ROOT, argsConfigName));
 }
@@ -43,10 +33,6 @@ function configExists(argsConfigName) {
     }
 
     hasConfig = jsonExists || jsExists;
-  }
-
-  if (configPath) {
-    setConfigPath(configPath);
   }
 
   return {
@@ -101,8 +87,7 @@ function getConfigConstants(projectId, argsConfigName) {
 
   if (!hasConfig) {
     if (!projectId) {
-      logger.error('Config file not found. No project ID provided');
-      process.exit(1);
+      logger.error('Config file not found. No project ID provided', '', true);
     }
 
     const defaultConstants = constants.getConstants();
@@ -121,6 +106,5 @@ function getConfigConstants(projectId, argsConfigName) {
 }
 
 module.exports = {
-  getConfigPath,
   getConfigConstants,
 };

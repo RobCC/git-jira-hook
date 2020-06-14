@@ -2,7 +2,7 @@ const validator = require('../bin/utils/validator');
 
 const {
   isSpecialCommit,
-  isFormatCorrect,
+  hasCorrectFormat,
   isTicketValid,
   getCommitType,
   isOtherBranch,
@@ -40,41 +40,51 @@ describe('validator', () => {
     });
   })
 
-  describe('isFormatCorrect', () => {
+  describe('hasCorrectFormat', () => {
     it('should reject a message without format', () => {
       const message = 'hello world';
-      const { hasFormat } = isFormatCorrect(message);
+      const { hasFormat } = hasCorrectFormat(message);
 
       expect(hasFormat).toBe(false);
     });
 
     it('should reject a message with an almost correct format', () => {
       const message = 'feat(TEST): Messsage';
-      const { hasFormat } = isFormatCorrect(message);
+      const { hasFormat } = hasCorrectFormat(message);
 
       expect(hasFormat).toBe(false);
     });
 
     it('should get the type and ticket of a correct message', () => {
       const message = 'feat(TEST-50): Messsage';
-      const { commitType, messageTicket } = isFormatCorrect(message);
+      const { hasFormat, commitType, messageTicket } = hasCorrectFormat(message);
 
+      expect(hasFormat).toBe(true);
       expect(commitType).toBe('feat');
       expect(messageTicket).toBe('TEST-50');
+    });
+
+    it('should validate a message with a correct format and without ticket', () => {
+      const message = 'randomtype: Messsage';
+      const { hasFormat, commitType, messageTicket } = hasCorrectFormat(message);
+
+      expect(hasFormat).toBe(true);
+      expect(commitType).toBe('randomtype');
+      expect(messageTicket).toBe('');
     });
   });
 
   describe('isTicketValid', () => {
-    it('should validate for a correct ticket', () => {
-      const ticket = `${PROJECT_ID}-123`;
-
-      expect(isTicketValid(ticket, PROJECT_ID)).toBe(true);
-    });
-
     it('should validate for an incorrect ticket', () => {
       const ticket = `DUMMY-123`;
 
       expect(isTicketValid(ticket, PROJECT_ID)).toBe(false);
+    });
+
+    it('should validate for a correct ticket, based on the project id provided', () => {
+      const ticket = `${PROJECT_ID}-123`;
+
+      expect(isTicketValid(ticket, PROJECT_ID)).toBe(true);
     });
   });
 
@@ -147,7 +157,7 @@ describe('validator', () => {
       expect(isValid).toBe(true);
     });
 
-    it('should validate for a incorrect branch', () => {
+    it('should validate for a non-main branch', () => {
       const branch = 'final';
       const isValid = isMainBranch(branch, mainBranches);
 
@@ -161,46 +171,50 @@ describe('validator', () => {
 
     it('should return the ticket of a valid branch', () => {
       const branch = `feature/${ticket}`;
-      const messageTicket = getTicketFromBranch(
+      const { isValid, branchTicket } = getTicketFromBranch(
         branch,
         PROJECT_ID,
         ticketBranches
       );
 
-      expect(messageTicket).toBe(ticket);
+      expect(isValid).toBe(true);
+      expect(branchTicket).toBe(ticket);
     });
 
-    it('should validate a branch with a non-valid prefix', () => {
+    it('should validate a branch with a non-valid ticket branch', () => {
       const branch = `quickfix/${ticket}`;
-      const messageTicket = getTicketFromBranch(
+      const { isValid, branchTicket } = getTicketFromBranch(
         branch,
         PROJECT_ID,
         ticketBranches
       );
 
-      expect(messageTicket).toBe(false);
+      expect(isValid).toBe(false);
+      expect(branchTicket).toBe('');
     });
 
-    it('should validate a branch without ticket', () => {
+    it('should validate a branch without ticket number', () => {
       const branch = `bugfix/${PROJECT_ID}`;
-      const messageTicket = getTicketFromBranch(
+      const { isValid, branchTicket } = getTicketFromBranch(
         branch,
         PROJECT_ID,
         ticketBranches
       );
 
-      expect(messageTicket).toBe(false);
+      expect(isValid).toBe(false);
+      expect(branchTicket).toBe('');
     });
 
     it('should validate a branch without format', () => {
       const branch = 'fix-config';
-      const messageTicket = getTicketFromBranch(
+      const { isValid, branchTicket } = getTicketFromBranch(
         branch,
         PROJECT_ID,
         ticketBranches
       );
 
-      expect(messageTicket).toBe(false);
+      expect(isValid).toBe(false);
+      expect(branchTicket).toBe('');
     });
   });
 

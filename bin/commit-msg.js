@@ -10,7 +10,7 @@ const config = require('./utils/config/config');
 const {
   isSpecialCommit,
   isMainBranch,
-  isFormatCorrect,
+  hasCorrectFormat,
   isTicketValid,
   getCommitType,
   isOtherBranch,
@@ -34,21 +34,19 @@ async function commitMsg() {
     branchTypes
   } = config.getConfigConstants(PROJECT_ID, CONFIG_PATH);
 
-  if (isSpecialCommit(firstLine)) {
-    logger.success('No need to add ticket', '', true);
-    process.exit(0);
-  }
-
   if (isMainBranch(branch, branchTypes.main)) {
     logger.error(
       'Cannot commit directly to the following branches',
       branchTypes.main.join(', '),
       true
     );
-    process.exit(1);
   }
 
-  const { hasFormat, messageTicket, commitType } = isFormatCorrect(firstLine);
+  if (isSpecialCommit(firstLine)) {
+    logger.success('No need to add ticket', '', true);
+  }
+
+  const { hasFormat, messageTicket, commitType } = hasCorrectFormat(firstLine);
 
   if (!hasFormat) {
     logger.error(
@@ -56,19 +54,16 @@ async function commitMsg() {
       `e.g. "feat(${projectId}-0): Description"`,
       true
     );
-    process.exit(1);
   }
 
   if (messageTicket) {
     if (isTicketValid(messageTicket, projectId)) {
       logger.success('Ticket already in place', '', true);
-      process.exit(0);
     } else {
-      logger.error(`Ticket's project id does not match project's. Should be ${projectId}`,
+      logger.error(`Ticket's project id does not match project id provided. Should be ${projectId}`,
         `e.g. "feat(${projectId}-0): Description"`,
         true
       );
-      process.exit(1);
     }
   }
 
@@ -80,7 +75,6 @@ async function commitMsg() {
 
   if (isNonTicketType) {
     logger.success('Non JIRA related commit. No need to add ticket', '', true);
-    process.exit(0);
   }
 
   if (!isTicketType) {
@@ -89,7 +83,6 @@ async function commitMsg() {
       `Commit types available are ${[...commitTypes.ticket, ...commitTypes.nonTicket].join(', ')}`,
       true
     );
-    process.exit(1);
   }
 
   logger.warn('Jira ticket is not on the commit message');
@@ -97,12 +90,11 @@ async function commitMsg() {
   if (isOtherBranch(branch, branchTypes.nonTicket)) {
     logger.success('Working on a non JIRA related branch', branchTypes.nonTicket.join(', '));
     logger.success('No need to add ticket', '', true);
-    process.exit(0);
   }
 
-  const branchTicket = getTicketFromBranch(branch, projectId, branchTypes.ticket);
+  const { isValid, branchTicket } = getTicketFromBranch(branch, projectId, branchTypes.ticket);
 
-  if (!branchTicket) {
+  if (!isValid) {
     logger.error(
       'Branch does not have a ticket. The following branch types require an assigned ticket',
       branchTypes.ticket.join(', ')
@@ -111,14 +103,14 @@ async function commitMsg() {
       'For a non-ticket branch, rename the branch (git branch -m) with one of the following prefixes',
       branchTypes.nonTicket.join(', ')
     );
-    logger.info('Branch types must always follow the following structure', '[branch-type]/[description]');
+    logger.info(
+      'Git branches may include an optional description after the ticket',
+      `${branchTypes.ticket.[0] || 'feature'}/${projectId}-Description`
+    );
     logger.error('Ticket name not found on branch. Please add one', '', true);
-    process.exit(1);
   }
 
   logger.loading('Adding ticket to commit message', branchTicket);
-
-  console.log('Commit message', firstLine, fullMessage, branchTicket);
 
   const newFullMessage = addTicketToCommit(
     firstLine,
@@ -129,7 +121,6 @@ async function commitMsg() {
 
   git.modifyCommitMessage(COMMIT_FILE, newFullMessage);
   logger.success('Success!', newFullMessage, true);
-  process.exit(0);
 }
 
 commitMsg();

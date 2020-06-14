@@ -135,8 +135,18 @@ Not complying with these conditions will abort the commit. It will display a mes
 Both hooks can be skipped by adding the `--no-verify` flag when commiting.
 
 
-## TODO
-- Test on Windows
+## Example of valid branches
+
+```
+feature/TEST-123-Optional-Description
+```
+
+## Example of invalid branches
+
+```
+feature/TEST-123_Optional-Description
+```
+
 
 ## Node features
 - Default params - v6 and newer

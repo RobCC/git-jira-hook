@@ -61,10 +61,18 @@ function loading(message, note, isFinal) {
 
 function success(message, note, isFinal) {
   log('success', message, note, isFinal);
+
+  if (isFinal) {
+    process.exit();
+  }
 }
 
 function error(message, note, isFinal) {
   log('error', message, note, isFinal);
+
+  if (isFinal) {
+    process.exit(1);
+  }
 }
 
 function warn(message, note, isFinal) {
