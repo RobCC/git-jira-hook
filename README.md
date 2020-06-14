@@ -147,6 +147,12 @@ feature/TEST-123-Optional-Description
 feature/TEST-123_Optional-Description
 ```
 
+## TODO
+
+- Test files
+- Debug option
+- Update README / instructions
+
 
 ## Node features
 - Default params - v6 and newer
