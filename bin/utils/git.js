@@ -1,6 +1,7 @@
-const childProcessExec = require('child_process').exec;
-const util = require('util');
+const branchName = require('current-git-branch');
 const fs = require('fs');
+
+const dbugger = require('./debugger');
 
 function getCommitMessage(commitFile) {
   let message;
@@ -11,6 +12,8 @@ function getCommitMessage(commitFile) {
     console.error('Cannot read commit message file', commitFile);
   }
 
+  dbugger.log('Commit message:', message);
+
   return [ message.split('\n')[0], message ];
 }
 
@@ -18,15 +21,12 @@ function modifyCommitMessage(commitFile, newContent) {
   fs.writeFileSync(commitFile, newContent);
 }
 
-async function getCurrentBranch() {
-  const exec = util.promisify(childProcessExec);
-  const cmd = await exec('git branch');
+function getCurrentBranch() {
+  const currentBranch = branchName();
 
-  if (!cmd.stdout) {
-    return '';
-  }
+  dbugger.log('Current branch:', currentBranch);
 
-  return cmd.stdout.split('\n').find(b => b.charAt(0) === '*').trim().substring(2);
+  return currentBranch;
 };
 
 module.exports = {

@@ -6,6 +6,7 @@ const logger = require('./utils/logger');
 const git = require('./utils/git');
 const validator = require('./utils/validator');
 const config = require('./utils/config/config');
+const dbugger = require('./utils/debugger');
 
 const {
   isSpecialCommit,
@@ -21,10 +22,13 @@ const {
 const [,, COMMIT_FILE] = process.argv;
 const PROJECT_ID = argv.projectId;
 const CONFIG_PATH = argv.config;
+const DEBUG_MODE = argv.debug || false;
 
 async function commitMsg() {
+  dbugger.setDebugMode(DEBUG_MODE);
+
   const [firstLine, fullMessage] = git.getCommitMessage(COMMIT_FILE);
-  const branch = await git.getCurrentBranch();
+  const branch = git.getCurrentBranch();
 
   logger.loading('Checking commit message');
 

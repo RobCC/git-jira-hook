@@ -26,12 +26,13 @@
   },
   "husky": {
     "hooks": {
-      "commit-msg": "bin/commit-msg.js ${HUSKY_GIT_PARAMS} --projectId TEST --config 'dummy/hooks.config.js'"
+      "commit-msg": "bin/commit-msg.js ${HUSKY_GIT_PARAMS} --debug --projectId TEST --config 'dummy/hooks.config.js'"
     }
   },
   "dependencies": {
     "ajv": "^6.12.2",
     "app-root-path": "^3.0.0",
+    "current-git-branch": "^1.1.0",
     "lodash.merge": "^4.6.2",
     "yargs": "^15.3.1"
   },
