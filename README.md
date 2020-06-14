@@ -135,13 +135,13 @@ Not complying with these conditions will abort the commit. It will display a mes
 Both hooks can be skipped by adding the `--no-verify` flag when commiting.
 
 
-## Example of valid branches
+### Example of valid branches
 
 ```
 feature/TEST-123-Optional-Description
 ```
 
-## Example of invalid branches
+### Example of invalid branches
 
 ```
 feature/TEST-123_Optional-Description
