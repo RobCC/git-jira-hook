@@ -6,7 +6,7 @@ const logger = require('./utils/logger');
 const git = require('./utils/git');
 const validator = require('./utils/validator');
 const config = require('./utils/config/config');
-const debugger = require('./utils/debugger');
+const dbugger = require('./utils/debugger');
 
 const {
   isSpecialCommit,
@@ -22,21 +22,26 @@ const {
 const [,, COMMIT_FILE] = process.argv;
 const PROJECT_ID = argv.projectId;
 const CONFIG_PATH = argv.config;
-const DEBUG_MODE = argv.debug;
+const DEBUG_MODE = argv.debug || false;
 
 async function commitMsg() {
+  dbugger.setDebugMode(DEBUG_MODE);
+
   const [firstLine, fullMessage] = git.getCommitMessage(COMMIT_FILE);
   const branch = await git.getCurrentBranch();
 
   logger.loading('Checking commit message');
 
-  console.log(DEBUG_MODE);
+  dbugger.log('(project id, config path)', PROJECT_ID, CONFIG_PATH);
+  dbugger.log('(current branch, first line, full message)', branch, firstLine, fullMessage);
 
   const {
     projectId,
     commitTypes,
     branchTypes
   } = config.getConfigConstants(PROJECT_ID, CONFIG_PATH);
+
+  dbugger.log('(config)', projectId, commitTypes, branchTypes);
 
   if (isMainBranch(branch, branchTypes.main)) {
     logger.error(
@@ -51,6 +56,8 @@ async function commitMsg() {
   }
 
   const { hasFormat, messageTicket, commitType } = hasCorrectFormat(firstLine);
+
+  dbugger.log('(hasFormat, messageTicket, commitType)', hasFormat, messageTicket, commitType);
 
   if (!hasFormat) {
     logger.error(
@@ -77,6 +84,8 @@ async function commitMsg() {
     commitTypes.nonTicket
   );
 
+  dbugger.log('(isTicketType, isNonTicketType)', isTicketType, isNonTicketType);
+
   if (isNonTicketType) {
     logger.success('Non JIRA related commit. No need to add ticket', '', true);
   }
@@ -97,6 +106,9 @@ async function commitMsg() {
   }
 
   const { isValid, branchTicket } = getTicketFromBranch(branch, projectId, branchTypes.ticket);
+
+
+  dbugger.log('(isValid, branchTicket)', isValid, branchTicket);
 
   if (!isValid) {
     logger.error(

@@ -5,14 +5,16 @@ function setDebugMode(on) {
 }
 
 function log(...messages) {
+  console.log("DEBUG_MODE", DEBUG_MODE)
+
   if (!DEBUG_MODE) {
     return;
   }
 
-  console.log(...messages)
+  console.log('[DEBUG]', ...messages)
 }
 
 module.exports = {
-  setDebugMode: setDebugMode
+  setDebugMode: setDebugMode,
   log: log
 };

@@ -2,6 +2,8 @@ const childProcessExec = require('child_process').exec;
 const util = require('util');
 const fs = require('fs');
 
+const dbugger = require('./debugger');
+
 function getCommitMessage(commitFile) {
   let message;
 
