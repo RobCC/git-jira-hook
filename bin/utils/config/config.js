@@ -55,6 +55,7 @@ function getConfigFromJSON(configPath) {
     }
   } catch (error) {
     logger.error('Error reading config file');
+    console.error(error);
 
     return null;
   }
@@ -72,6 +73,7 @@ function getConfigFromJS(configPath) {
     }
   } catch (error) {
     logger.error('Error reading config file');
+    console.error(error);
 
     return null;
   }
