@@ -150,9 +150,13 @@ feature/TEST-123_Optional-Description
 ## TODO
 
 - Test files
-- Debug option
 - Update README / instructions
 - Experiment with rollup
+
+## WIP
+
+- Tester only minifies entrypoint when `preserveModules` is active
+- Find out about _virtual folder
 
 
 ## Node features

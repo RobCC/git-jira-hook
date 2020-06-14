@@ -1,17 +1,19 @@
-import { getBabelOutputPlugin } from '@rollup/plugin-babel';
+import { babel, getBabelOutputPlugin } from '@rollup/plugin-babel';
 import { terser } from 'rollup-plugin-terser';
-import { preserveShebangs  } from 'rollup-plugin-preserve-shebangs';
+import commonjs from '@rollup/plugin-commonjs';
+import { preserveShebangs } from 'rollup-plugin-preserve-shebangs';
 
 export default {
   input: 'bin/commit-msg.js',
   output: {
-    dir: 'build',
+    // dir: 'build',
+    file: 'build/commit-msg.js',
     format: 'cjs'
   },
-  preserveModules: true,
+  // preserveModules: true,
   plugins: [
     preserveShebangs(),
-    // commonjs(),
+    commonjs(),
     getBabelOutputPlugin({
       presets: ['@babel/preset-env'],
       plugins: [['@babel/plugin-transform-runtime', { useESModules: false }]]
