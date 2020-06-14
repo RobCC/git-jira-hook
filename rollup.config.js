@@ -6,6 +6,7 @@ import { preserveShebangs } from 'rollup-plugin-preserve-shebangs';
 export default {
   input: 'bin/commit-msg.js',
   output: {
+    banner: '#!/usr/bin/env node',
     file: 'build/commit-msg.js',
     // dir: 'build',
     format: 'cjs'
@@ -13,11 +14,15 @@ export default {
   // preserveModules: true,
   plugins: [
     preserveShebangs(),
-    commonjs(),
+    commonjs({
+      dynamicRequireTargets: [
+        './bin/utils/config/reader.js'
+      ],
+    }),
     getBabelOutputPlugin({
       presets: ['@babel/preset-env'],
       plugins: [['@babel/plugin-transform-runtime', { useESModules: false }]]
     }),
-    terser(),
+    // terser(),
   ],
 };

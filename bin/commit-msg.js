@@ -1,5 +1,3 @@
-#!/usr/bin/env node
-
 const argv = require('yargs').argv;
 
 const logger = require('./utils/logger');

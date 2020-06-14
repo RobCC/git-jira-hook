@@ -3,7 +3,9 @@ const path = require('path');
 const fs = require('fs');
 
 const logger = require('../logger');
+const dbugger = require('../debugger');
 const constants = require('./constants');
+const reader = require('./reader');
 
 const { getConstants } = constants;
 const ROOT = appRoot.toString();
@@ -61,28 +63,10 @@ function getConfigFromJSON(configPath) {
   }
 }
 
-function getConfigFromJS(configPath) {
-  try {
-    const relativePath = path.relative(__dirname, configPath);
-    const jsFile = require(relativePath);
-
-    if (jsFile && typeof jsFile === 'object') {
-      return jsFile;
-    } else if (jsFile && typeof jsFile === 'function') {
-      return jsFile();
-    }
-  } catch (error) {
-    logger.error('Error reading config file');
-    console.error(error);
-
-    return null;
-  }
-}
-
 function getConfig(configPath, isJSON) {
   return isJSON
     ? getConfigFromJSON(configPath)
-    : getConfigFromJS(configPath);
+    : reader.getConfigFromJS(configPath);
 }
 
 function getConfigConstants(projectId, argsConfigName) {
@@ -102,6 +86,8 @@ function getConfigConstants(projectId, argsConfigName) {
       projectId,
     };
   }
+
+  dbugger.log('Getting config on:', configPath, isJSON ? 'as JSON' : 'as JS');
 
   const config = getConfig(configPath, isJSON);
 
