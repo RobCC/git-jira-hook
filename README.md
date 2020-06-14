@@ -1,4 +1,4 @@
-# Git Jira hook [![version](https://img.shields.io/npm/v/git-jira-hook?color=crimson&style=flat-square)](https://www.npmjs.com/package/git-jira-hook) ![](https://img.shields.io/librariesio/release/npm/git-jira-hook?style=flat-square)
+# Git Jira hook [![version](https://img.shields.io/npm/v/git-jira-hook?color=crimson&style=flat-square)](https://www.npmjs.com/package/git-jira-hook)
 
 This enforces commit messages and branches to be written in a specific format (using **JIRA**), following a similar structure to the conventional commits. This is done through [husky](https://github.com/typicode/husky) and the [`commit-msg`](https://git-scm.com/docs/githooks#_commit_msg) hook.
 
