@@ -105,7 +105,7 @@ async function commitMsg() {
     );
     logger.info(
       'Git branches may include an optional description after the ticket',
-      `${branchTypes.ticket.[0] || 'feature'}/${projectId}-Description`
+      `${branchTypes.ticket[0] || 'feature'}/${projectId}-Description`
     );
     logger.error('Ticket name not found on branch. Please add one', '', true);
   }

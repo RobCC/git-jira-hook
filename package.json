@@ -1,6 +1,6 @@
 {
   "name": "git-jira-hooks",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Git hooks with Jira",
   "main": "index.js",
   "bin": {
