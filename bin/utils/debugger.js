@@ -13,6 +13,6 @@ function log(...messages) {
 }
 
 module.exports = {
-  setDebugMode: setDebugMode,
-  log: log
+  log,
+  setDebugMode,
 };

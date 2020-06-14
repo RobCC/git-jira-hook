@@ -1,21 +1,28 @@
-import resolve from '@rollup/plugin-node-resolve';
-import commonjs from '@rollup/plugin-commonjs';
-import json from '@rollup/plugin-json';
+import { getBabelOutputPlugin } from '@rollup/plugin-babel';
 import { terser } from 'rollup-plugin-terser';
-import { preserveShebangs  } from 'rollup-plugin-preserve-shebangs';
+import commonjs from '@rollup/plugin-commonjs';
+import { preserveShebangs } from 'rollup-plugin-preserve-shebangs';
 
 export default {
   input: 'bin/commit-msg.js',
   output: {
-    file: 'build/commit-msg.js'
+    banner: '#!/usr/bin/env node',
+    file: 'build/commit-msg.js',
+    // dir: 'build',
+    format: 'cjs'
   },
+  // preserveModules: true,
   plugins: [
-    // resolve({
-    //   extensions: ['js'],
-    // }),
-    // json(),
-    preserveShebangs(),
-    commonjs(),
-    // terser(),
+    // preserveShebangs(),
+    commonjs({
+      dynamicRequireTargets: [
+        './bin/utils/config/reader.js'
+      ],
+    }),
+    getBabelOutputPlugin({
+      presets: ['@babel/preset-env'],
+      plugins: [['@babel/plugin-transform-runtime', { useESModules: false }]]
+    }),
+    terser(),
   ],
 };

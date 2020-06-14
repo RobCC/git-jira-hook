@@ -5,6 +5,7 @@ const logger = require('../logger');
 
 const schema = {
   required: ['projectId'],
+  additionalProperties: false,
   properties: {
     projectId: {
       type: 'string',
@@ -15,10 +16,12 @@ const schema = {
       properties: {
         ticket: {
           type: 'array',
+          minItems: 1,
           items: { type: 'string' },
         },
         nonTicket: {
           type: 'array',
+          minItems: 1,
           items: { type: 'string' },
         },
       },
@@ -29,14 +32,17 @@ const schema = {
       properties: {
         main: {
           type: 'array',
+          minItems: 1,
           items: { type: 'string' },
         },
         ticket: {
           type: 'array',
+          minItems: 1,
           items: { type: 'string' },
         },
         nonTicket: {
           type: 'array',
+          minItems: 1,
           items: { type: 'string' },
         },
       },
@@ -54,7 +60,7 @@ function displayErrors(errors) {
   }
 }
 
-function isConfigValid(config) {
+function isValid(config) {
   const isValid = ajv.validate(schema, config);
 
   if (isValid) {
@@ -66,5 +72,6 @@ function isConfigValid(config) {
 }
 
 module.exports = {
-  isConfigValid,
+  schema,
+  isValid,
 };

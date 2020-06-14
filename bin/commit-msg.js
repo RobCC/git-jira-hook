@@ -1,5 +1,3 @@
-#!/usr/bin/env node
-
 const argv = require('yargs').argv;
 
 const logger = require('./utils/logger');
@@ -29,14 +27,11 @@ async function commitMsg() {
 
   const [firstLine, fullMessage] = git.getCommitMessage(COMMIT_FILE);
   const branch = git.getCurrentBranch();
+  const configValues = config.getConfigConstants(PROJECT_ID, CONFIG_PATH);
+  const { projectId, commitTypes, branchTypes } = configValues;
 
+  dbugger.log('Config values:', configValues);
   logger.loading('Checking commit message');
-
-  const {
-    projectId,
-    commitTypes,
-    branchTypes
-  } = config.getConfigConstants(PROJECT_ID, CONFIG_PATH);
 
   if (isMainBranch(branch, branchTypes.main)) {
     logger.error(

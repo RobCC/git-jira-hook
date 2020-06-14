@@ -84,9 +84,9 @@ function info(message, note, isFinal) {
 }
 
 module.exports = {
-  loading: loading,
-  success: success,
-  error: error,
-  warn: warn,
-  info: info
+  loading,
+  success,
+  error,
+  warn,
+  info,
 };

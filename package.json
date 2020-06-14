@@ -1,10 +1,10 @@
 {
   "name": "git-jira-hooks",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Git hooks with Jira",
   "main": "index.js",
   "bin": {
-    "git-jira-hooks": "bin/commit-msg.js"
+    "git-jira-hooks": "build/commit-msg.js"
   },
   "repository": {
     "type": "git",
@@ -14,22 +14,29 @@
     "url": "https://github.com/RobCC/git-jira-hooks/issues"
   },
   "files": [
-    "bin"
+    "build"
   ],
-  "keywords": [],
+  "keywords": [
+    "git",
+    "jira",
+    "hooks"
+  ],
   "author": "",
   "license": "ISC",
   "homepage": "https://github.com/RobCC/git-jira-hooks#readme",
   "scripts": {
     "build": "rollup -c",
-    "test": "jest"
+    "test": "jest",
+    "release": "npm run build && npm publish",
+    "release:beta": "npm run build && npm publish --tag beta"
   },
   "husky": {
     "hooks": {
-      "commit-msg": "bin/commit-msg.js ${HUSKY_GIT_PARAMS} --debug --projectId TEST --config 'dummy/hooks.config.js'"
+      "commit-msg": "build/commit-msg.js ${HUSKY_GIT_PARAMS} --debug --projectId TEST"
     }
   },
   "dependencies": {
+    "@babel/runtime": "^7.10.2",
     "ajv": "^6.12.2",
     "app-root-path": "^3.0.0",
     "current-git-branch": "^1.1.0",
@@ -37,9 +44,12 @@
     "yargs": "^15.3.1"
   },
   "devDependencies": {
+    "@babel/cli": "^7.10.1",
+    "@babel/core": "^7.10.2",
+    "@babel/plugin-transform-runtime": "^7.10.1",
+    "@babel/preset-env": "^7.10.2",
+    "@rollup/plugin-babel": "^5.0.3",
     "@rollup/plugin-commonjs": "^13.0.0",
-    "@rollup/plugin-json": "^4.1.0",
-    "@rollup/plugin-node-resolve": "^8.0.1",
     "husky": "^4.2.3",
     "jest": "^25.2.7",
     "rollup": "^2.16.1",

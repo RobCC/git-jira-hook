@@ -2,7 +2,7 @@ const merge = require('lodash.merge');
 
 const schema = require('./schema');
 
-const DEFAULT_CONSTANTS = {
+const DEFAULT_VALUES = {
   projectId: '',
   commitTypes: {
     ticket: ['feat', 'fix', 'chore'],
@@ -16,9 +16,9 @@ const DEFAULT_CONSTANTS = {
 };
 
 function getConstants(config) {
-  return config && schema.isConfigValid(config)
-    ? merge(DEFAULT_CONSTANTS, config)
-    : DEFAULT_CONSTANTS;
+  return config && schema.isValid(config)
+    ? merge(DEFAULT_VALUES, config)
+    : DEFAULT_VALUES;
 }
 
 module.exports = {

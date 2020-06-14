@@ -15,30 +15,30 @@ describe('validator', () => {
   const PROJECT_ID = 'TEST';
 
   describe('isSpecialCommit', () => {
-    it('should valite a Merge commit message', () => {
+    it('should validate a Merge commit message', () => {
       const message = "Merge branch 'master' into dev";
 
       expect(isSpecialCommit(message)).toBe(true);
     });
 
-    it('should valite a Merged commit message', () => {
+    it('should validate a Merged commit message', () => {
       const message = 'Merged in feature/TICKET-123';
 
       expect(isSpecialCommit(message)).toBe(true);
     });
 
-    it('should valite a version commit message', () => {
+    it('should validate a version commit message', () => {
       const message = '2.1.0';
 
       expect(isSpecialCommit(message)).toBe(true);
     });
 
-    it('should valite a BREAKING CHANGE commit message', () => {
+    it('should validate a BREAKING CHANGE commit message', () => {
       const message = 'BREAKING CHANGE: environment variables now take precedence over config files';
 
       expect(isSpecialCommit(message)).toBe(true);
     });
-  })
+  });
 
   describe('hasCorrectFormat', () => {
     it('should reject a message without format', () => {

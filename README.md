@@ -149,10 +149,11 @@ feature/TEST-123_Optional-Description
 
 ## TODO
 
-- Test files
-- Debug option
 - Update README / instructions
-- Experiment with rollup
+
+## WIP
+
+- shebags issue when `dynamicRequireTargets` is on.
 
 
 ## Node features
