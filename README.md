@@ -149,14 +149,11 @@ feature/TEST-123_Optional-Description
 
 ## TODO
 
-- Test files
 - Update README / instructions
-- Experiment with rollup
 
 ## WIP
 
-- Tester only minifies entrypoint when `preserveModules` is active
-- Find out about _virtual folder
+- shebags issue when `dynamicRequireTargets` is on.
 
 
 ## Node features
