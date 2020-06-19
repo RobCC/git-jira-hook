@@ -1,4 +1,4 @@
-# Git Jira hook [![version](https://img.shields.io/npm/v/git-jira-hook?color=crimson&style=flat-square)](https://www.npmjs.com/package/git-jira-hook)
+# git-jira-hook [![version](https://img.shields.io/npm/v/git-jira-hook?color=crimson&style=flat-square)](https://www.npmjs.com/package/git-jira-hook)
 
 ![Example](media/example.gif)
 
