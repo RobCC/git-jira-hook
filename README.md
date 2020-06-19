@@ -1,5 +1,7 @@
 # Git Jira hook [![version](https://img.shields.io/npm/v/git-jira-hook?color=crimson&style=flat-square)](https://www.npmjs.com/package/git-jira-hook)
 
+![Example](media/example.gif)
+
 This enforces commit messages and branches to be written in a specific format (using **JIRA**), following a similar structure to the conventional commits. This is done through [husky](https://github.com/typicode/husky) and the [`commit-msg`](https://git-scm.com/docs/githooks#_commit_msg) hook.
 
 # Install
@@ -10,7 +12,7 @@ npm i -D git-jira-hook
 ```
 "husky": {
   "hooks": {
-    "commit-msg": "git-jira-hooks ${HUSKY_GIT_PARAMS} --projectId MYPROJ"
+    "commit-msg": "git-jira-hook ${HUSKY_GIT_PARAMS} --projectId MYPROJ"
   }
 },
 ```
@@ -86,7 +88,7 @@ For minimal configuration, you just need to pass `projectId`. This will be used 
 ```
 "husky": {
   "hooks": {
-    "commit-msg": "git-jira-hooks ${HUSKY_GIT_PARAMS} --projectId MYPROJ"
+    "commit-msg": "git-jira-hook ${HUSKY_GIT_PARAMS} --projectId MYPROJ"
   }
 },
 ```
@@ -121,7 +123,7 @@ By default it will look for `hooks.config.js` or `hooks.config.json` on the root
 ```
 "husky": {
   "hooks": {
-    "commit-msg": "git-jira-hooks ${HUSKY_GIT_PARAMS} --config 'path/to/my-jira-config.js'"
+    "commit-msg": "git-jira-hook ${HUSKY_GIT_PARAMS} --config 'path/to/my-jira-config.js'"
   }
 },
 ```
