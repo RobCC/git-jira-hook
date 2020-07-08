@@ -26,7 +26,7 @@
   "homepage": "https://github.com/RobCC/git-jira-hook#readme",
   "scripts": {
     "build": "rollup -c",
-    "test": "jest",
+    "test": "jest --watch",
     "release": "npm run build && npm publish",
     "release:beta": "npm run build && npm publish --tag beta"
   },
