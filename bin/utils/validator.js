@@ -62,8 +62,8 @@ function isTicketValid(commitTicket, projectId) {
  * @returns {boolean[]} A tuple defining if the commit type is on the ticket and non-ticket group
  */
 function getCommitType(type, ticketTypes, nonTicketTypes) {
-  const ticketRegex = new RegExp(`^${ticketTypes.join('|')}$`);
-  const nonTicketRegex = new RegExp(`^${nonTicketTypes.join('|')}$`);
+  const ticketRegex = new RegExp(`^\\b(${ticketTypes.join('|')})\\b$`);
+  const nonTicketRegex = new RegExp(`^\\b(${nonTicketTypes.join('|')})\\b$`);
 
   return [!!type.match(ticketRegex), !!type.match(nonTicketRegex)]
 }
@@ -75,7 +75,7 @@ function getCommitType(type, ticketTypes, nonTicketTypes) {
  * @returns {boolean}
  */
 function isOtherBranch(branch, nonTicketBranches) {
-  const regex = new RegExp(`^(${nonTicketBranches.join('|')})\\/.+?$`);
+  const regex = new RegExp(`^\\b(${nonTicketBranches.join('|')})\\b\\/.+?$`);
 
   return !!branch.match(regex);
 }
@@ -87,7 +87,7 @@ function isOtherBranch(branch, nonTicketBranches) {
  * @returns {boolean}
  */
 function isMainBranch(branch, mainBranches) {
-  const regex = new RegExp(`^${mainBranches.join('|')}$`);
+  const regex = new RegExp(`^\\b(${mainBranches.join('|')})\\b$`);
 
   return !!branch.match(regex);
 }

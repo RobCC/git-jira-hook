@@ -104,6 +104,18 @@ describe('validator', () => {
       expect(isNonTicketType).toBe(false);
     });
 
+    it('should return a wrong commit ticket type', () => {
+      const type = 'feature';
+      const [isTicketType, isNonTicketType] = getCommitType(
+        type,
+        ticketTypes,
+        nonTicketTypes
+      );
+
+      expect(isTicketType).toBe(false);
+      expect(isNonTicketType).toBe(false);
+    });
+
     it('should return a non commit ticket type', () => {
       const type = 'other';
       const [isTicketType, isNonTicketType] = getCommitType(
