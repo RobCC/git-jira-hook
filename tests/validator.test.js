@@ -27,6 +27,12 @@ describe('validator', () => {
       expect(isSpecialCommit(message)).toBe(true);
     });
 
+    it('should validate a Revert commit message', () => {
+      const message = 'Revert feature: new feature added';
+
+      expect(isSpecialCommit(message)).toBe(true);
+    });
+
     it('should validate a version commit message', () => {
       const message = '2.1.0';
 
