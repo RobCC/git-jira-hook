@@ -12,11 +12,13 @@
  */
 function isSpecialCommit(message) {
   const mergeCommitRegex = new RegExp('^Merge(d)?.*?$');
+  const revertCommitRegex = new RegExp('^Revert.*?$');
   const versionCommitRegex = new RegExp('^v??[0-9]*\\.[0-9]*\\.[0-9]*.*$');
   const breakingChangeRegex = new RegExp('^BREAKING CHANGE: .*$');
 
   return !!(
     message.match(mergeCommitRegex) ||
+    message.match(revertCommitRegex) ||
     message.match(versionCommitRegex) ||
     message.match(breakingChangeRegex)
   );
