@@ -17,6 +17,12 @@ npm i -D git-jira-hook
 },
 ```
 
+on Husky 5:
+
+```
+npx husky add .husky/commit-msg 'npx git-jira-hook "$1" --projectId TEST'
+```
+
 # How it works
 The hook will validate two things:
 - That the current branch is valid to commit directly, and has the correct format.
