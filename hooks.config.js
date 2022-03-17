@@ -3,4 +3,7 @@ module.exports = {
   commitTypes: {
     nonTicket: ['other', 'test'],
   },
+  branchTypes: {
+    nonTicket: ['release']
+  }
 }
