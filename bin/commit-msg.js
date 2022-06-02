@@ -31,6 +31,13 @@ async function commitMsg() {
   const { projectId, commitTypes, branchTypes } = configValues;
 
   dbugger.log('Config values:', configValues);
+  dbugger.log('Commit data: ', {
+    projectId,
+    fullMessage,
+    firstLine,
+    branch
+  });
+
   logger.loading('Checking commit message');
 
   if (isSpecialCommit(firstLine)) {
@@ -46,6 +53,12 @@ async function commitMsg() {
   }
 
   const { hasFormat, messageTicket, commitType } = hasCorrectFormat(firstLine);
+
+  dbugger.log('Format data: ', {
+    hasFormat,
+    messageTicket,
+    commitType
+  });
 
   if (!hasFormat) {
     logger.error(
@@ -72,6 +85,8 @@ async function commitMsg() {
     commitTypes.nonTicket
   );
 
+  dbugger.log('Type data: ', { isTicketType, isNonTicketType });
+
   if (isNonTicketType) {
     logger.success('Non JIRA related commit. No need to add ticket', '', true);
   }
@@ -92,6 +107,8 @@ async function commitMsg() {
   }
 
   const { isValid, branchTicket } = getTicketFromBranch(branch, projectId, branchTypes.ticket);
+
+  dbugger.log('Branch data: ', { isValid, branchTicket });
 
   if (!isValid) {
     logger.error(
