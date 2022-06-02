@@ -17,10 +17,13 @@ npm i -D git-jira-hook
 },
 ```
 
-on Husky 5:
+on Husky 5 (`commit-msg`):
 
 ```
-npx husky add .husky/commit-msg 'npx git-jira-hook "$1" --projectId TEST'
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+npx git-jira-hook $1
 ```
 
 # How it works
@@ -132,6 +135,15 @@ By default it will look for `hooks.config.js` or `hooks.config.json` on the root
     "commit-msg": "git-jira-hook ${HUSKY_GIT_PARAMS} --config 'path/to/my-jira-config.js'"
   }
 },
+```
+
+on Husky 5 (`commit-msg`):
+
+```
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+npx git-jira-hook $1 --config 'path/to/my-jira-config.js'
 ```
 
 # Specifics
