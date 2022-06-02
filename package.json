@@ -1,6 +1,6 @@
 {
   "name": "git-jira-hook",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Git hook for Jira workflow",
   "main": "build/commit-msg.js",
   "bin": {
