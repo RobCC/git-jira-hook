@@ -28,7 +28,8 @@ async function commitMsg() {
   const [firstLine, fullMessage] = git.getCommitMessage(COMMIT_FILE);
   const branch = git.getCurrentBranch();
   const configValues = config.getConfigConstants(PROJECT_ID, CONFIG_PATH);
-  const { projectId, commitTypes, branchTypes } = configValues;
+  let { projectId, commitTypes, branchTypes } = configValues;
+  projectId = Array.isArray(projectId) ? projectId.join('|') : projectId 
 
   dbugger.log('Config values:', configValues);
   dbugger.log('Commit data: ', {
@@ -72,7 +73,7 @@ async function commitMsg() {
     if (isTicketValid(messageTicket, projectId)) {
       logger.success('Ticket already in place', '', true);
     } else {
-      logger.error(`Ticket's project id does not match project id provided. Should be ${projectId}`,
+      logger.error(`Ticket's project id does not match any of the project ids provided. Should be ${projectId}`,
         `e.g. "feat(${projectId}-0): Description"`,
         true
       );

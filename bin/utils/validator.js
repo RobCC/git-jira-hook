@@ -31,16 +31,13 @@ function isSpecialCommit(message) {
  */
 function hasCorrectFormat(message) {
   const regex = new RegExp('^([a-z]+?)(?:\\((.*?-[0-9]+?)+\\))?: .*?$');
-  const [
-    hasFormat = false,
-    commitType = '',
-    messageTicket = ''
-  ] = message.match(regex) || [];
+  const [hasFormat = false, commitType = '', messageTicket = ''] =
+    message.match(regex) || [];
 
   return {
     hasFormat: !!hasFormat,
     commitType,
-    messageTicket
+    messageTicket,
   };
 }
 
@@ -67,7 +64,7 @@ function getCommitType(type, ticketTypes, nonTicketTypes) {
   const ticketRegex = new RegExp(`^\\b(${ticketTypes.join('|')})\\b$`);
   const nonTicketRegex = new RegExp(`^\\b(${nonTicketTypes.join('|')})\\b$`);
 
-  return [!!type.match(ticketRegex), !!type.match(nonTicketRegex)]
+  return [!!type.match(ticketRegex), !!type.match(nonTicketRegex)];
 }
 
 /**
@@ -103,15 +100,14 @@ function isMainBranch(branch, mainBranches) {
  * @returns {boolean | string} If it's not valid return false, else return the ticket on the branch (if it's there)
  */
 function getTicketFromBranch(branch, projectId, ticketBranches) {
-  const regex = new RegExp(`^(?:${ticketBranches.join('|')})\\/(${projectId}-[0-9]+)(?:-(.*?))?$`);
-  const [
-    isValid = false,
-    branchTicket = ''
-  ] = branch.match(regex) || [];
+  const regex = new RegExp(
+    `^(?:${ticketBranches.join('|')})\\/(${projectId}-[0-9]+)(?:-(.*?))?$`
+  );
+  const [isValid = false, branchTicket = ''] = branch.match(regex) || [];
 
   return {
     isValid: !!isValid,
-    branchTicket
+    branchTicket,
   };
 }
 
@@ -141,5 +137,5 @@ module.exports = {
   isOtherBranch,
   isMainBranch,
   getTicketFromBranch,
-  addTicketToCommit
+  addTicketToCommit,
 };

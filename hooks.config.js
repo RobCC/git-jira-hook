@@ -1,9 +1,9 @@
 module.exports = {
-  projectId: 'TEST',
+  projectId: ['CUSTSUPP', 'TEST'],
   commitTypes: {
     nonTicket: ['other', 'test'],
   },
   branchTypes: {
-    nonTicket: ['release']
-  }
-}
+    nonTicket: ['release'],
+  },
+};

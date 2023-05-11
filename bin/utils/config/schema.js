@@ -8,7 +8,7 @@ const schema = {
   additionalProperties: false,
   properties: {
     projectId: {
-      type: 'string',
+      type: ['string', 'array'],
     },
     commitTypes: {
       type: 'object',
