@@ -93,6 +93,19 @@ describe('validator', () => {
 
       expect(isTicketValid(ticket, PROJECT_ID)).toBe(true);
     });
+
+    it('should validate for a correct ticket, based on the project ids provided', () => {
+      const ticket = `${PROJECT_ID}-123`;
+
+      expect(isTicketValid(ticket, [PROJECT_ID, 'ANOTHERTEST'])).toBe(true);
+    });
+    it('should validate for an incorrect ticket, based on the project ids provided', () => {
+      const ticket = `${PROJECT_ID}-123`;
+
+      expect(isTicketValid(ticket, ['YETANOTHERTEST', 'ANOTHERTEST'])).toBe(
+        false
+      );
+    });
   });
 
   describe('getCommitType', () => {
@@ -200,11 +213,35 @@ describe('validator', () => {
       expect(branchTicket).toBe(ticket);
     });
 
+    it('should return the ticket of a valid branch from multiple ids', () => {
+      const branch = `feature/ANOTHERTEST-123`;
+      const { isValid, branchTicket } = getTicketFromBranch(
+        branch,
+        [PROJECT_ID, 'ANOTHERTEST'],
+        ticketBranches
+      );
+
+      expect(isValid).toBe(true);
+      expect(branchTicket).toBe('ANOTHERTEST-123');
+    });
+
     it('should validate a branch with a non-valid ticket branch', () => {
       const branch = `quickfix/${ticket}`;
       const { isValid, branchTicket } = getTicketFromBranch(
         branch,
         PROJECT_ID,
+        ticketBranches
+      );
+
+      expect(isValid).toBe(false);
+      expect(branchTicket).toBe('');
+    });
+
+    it('should validate a branch with a non-valid ticket branch w/multiple ids', () => {
+      const branch = `quickfix/${ticket}`;
+      const { isValid, branchTicket } = getTicketFromBranch(
+        branch,
+        [PROJECT_ID, 'ANOTHERTEST'],
         ticketBranches
       );
 
@@ -224,11 +261,23 @@ describe('validator', () => {
       expect(branchTicket).toBe('');
     });
 
+    it('should validate a branch without ticket number w/multiple ids', () => {
+      const branch = `bugfix/${PROJECT_ID}`;
+      const { isValid, branchTicket } = getTicketFromBranch(
+        branch,
+        PROJECT_ID,
+        ticketBranches
+      );
+
+      expect(isValid).toBe(false);
+      expect(branchTicket).toBe('');
+    });
+
     it('should validate a branch without format', () => {
       const branch = 'fix-config';
       const { isValid, branchTicket } = getTicketFromBranch(
         branch,
-        PROJECT_ID,
+        [PROJECT_ID, 'ANOTHERTEST'],
         ticketBranches
       );
 

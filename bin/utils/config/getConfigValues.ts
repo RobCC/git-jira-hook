@@ -6,7 +6,7 @@ import logger from '../logger';
 import argv from '../argv';
 import SCHEMA from './schema';
 
-const ajv = new Ajv({ allErrors: true });
+const ajv = new Ajv({ allErrors: true, allowUnionTypes: true });
 
 /**
  * Default values if a config was not provided.

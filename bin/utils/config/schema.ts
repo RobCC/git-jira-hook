@@ -4,7 +4,9 @@ export default {
   additionalProperties: false,
   properties: {
     projectId: {
-      type: 'string',
+      type: ['string', 'array'],
+      minItems: 1,
+      items: { type: 'string' },
     },
     commitTypes: {
       type: 'object',

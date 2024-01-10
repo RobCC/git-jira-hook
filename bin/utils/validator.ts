@@ -44,10 +44,14 @@ function hasCorrectFormat(message: string): FormatResponse {
 }
 
 /** Validates that the commit message ticket matches the one provided. */
-function isTicketValid(commitTicket: string, projectId: string) {
-  const regex = new RegExp(`^${projectId}(-)([0-9])+?$`);
+function isTicketValid(commitTicket: string, projectId: string | string[]) {
+  const allProjectIds = typeof projectId === 'string' ? [projectId] : projectId;
 
-  return !!commitTicket.match(regex);
+  return allProjectIds.some((id) => {
+    const regex = new RegExp(`^${id}(-)([0-9])+?$`);
+
+    return !!commitTicket.match(regex);
+  });
 }
 
 /**
@@ -100,17 +104,30 @@ function isMainBranch(branch: string, mainBranches: string[]) {
  */
 function getTicketFromBranch(
   branch: string,
-  projectId = '',
+  projectId: string | string[],
   ticketBranches: string[] = []
 ) {
-  const regex = new RegExp(
-    `^(?:${ticketBranches.join('|')})\\/(${projectId}-[0-9]+)(?:-(.*?))?$`
-  );
-  const [isValid = false, branchTicket = ''] = branch.match(regex) || [];
+  const allProjectIds = typeof projectId === 'string' ? [projectId] : projectId;
+
+  for (let i = 0; i < allProjectIds.length; i += 1) {
+    const id = allProjectIds[i];
+
+    const regex = new RegExp(
+      `^(?:${ticketBranches.join('|')})\\/(${id}-[0-9]+)(?:-(.*?))?$`
+    );
+    const [isValid = false, branchTicket = ''] = branch.match(regex) || [];
+
+    if (isValid) {
+      return {
+        isValid: !!isValid,
+        branchTicket,
+      };
+    }
+  }
 
   return {
-    isValid: !!isValid,
-    branchTicket,
+    isValid: false,
+    branchTicket: '',
   };
 }
 

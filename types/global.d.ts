@@ -2,7 +2,7 @@ export {};
 
 declare global {
   type Config = {
-    projectId: string;
+    projectId: string | string[];
     commitTypes: {
       ticket: string[];
       nonTicket: string[];
