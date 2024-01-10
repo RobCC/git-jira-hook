@@ -26,6 +26,7 @@ module.exports = {
     sourceType: 'module',
   },
   plugins: ['@typescript-eslint', 'jest'],
+  ignorePatterns: ['build/*'],
   rules: {
     'no-console': [1, { allow: ['error'] }],
     'newline-before-return': 2,
