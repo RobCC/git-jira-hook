@@ -14,16 +14,16 @@ const ajv = new Ajv({ allErrors: true, allowUnionTypes: true });
  * Here we set `projectId` from the argument passed.
  * We later check if it exists.
  */
-export const DEFAULT_VALUES: Config = {
+export const DEFAULT_VALUES: ConfigValues = {
   projectId: argv.projectId ?? '',
   commitTypes: {
-    ticket: ['feat', 'fix', 'chore'],
-    nonTicket: ['other'],
+    ticket: ['feat', 'feature', 'fix'],
+    nonTicket: ['chore', 'refactor'],
   },
   branchTypes: {
-    main: ['master', 'develop'],
-    ticket: ['feature', 'bugfix', 'hotfix'],
-    nonTicket: ['other', 'release', 'support'],
+    main: ['master'],
+    ticket: ['feat', 'feature', 'bugfix'],
+    nonTicket: ['release', 'support', 'chore'],
   },
 };
 
@@ -35,7 +35,7 @@ function displayErrors(errors: ErrorObject[]) {
   }
 }
 
-function isValid(config: UnknownObject) {
+function isValid(config: UnknownObject): config is Config {
   const isValid = ajv.validate(schema, config);
 
   if (ajv.errors) {
@@ -45,7 +45,7 @@ function isValid(config: UnknownObject) {
   return isValid;
 }
 
-function getConfigValues(config: UnknownObject): Config {
+function getConfigValues(config: UnknownObject): ConfigValues {
   if (config && isValid(config)) {
     return merge(DEFAULT_VALUES, config);
   }

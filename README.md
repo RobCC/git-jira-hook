@@ -142,13 +142,13 @@ The following is an example of a full configuration file, with the default value
 {
   "projectId": "MYPROJ",
   "commitTypes": {
-    "ticket": ["feat", "fix", "chore"],
-    "nonTicket": ["other"]
+    "ticket": ["feat", "feature", "fix"],
+    "nonTicket": ["chore", "refactor"]
   },
   "branchTypes": {
-    "main": ["master", "develop"],
-    "ticket": ["feature", "bugfix", "hotfix"],
-    "nonTicket": ["other", "release", "support"]
+    "main": ["master"],
+    "ticket": ["feat", "feature", "bugfix"],
+    "nonTicket": ["release", "support"]
   }
 }
 ```

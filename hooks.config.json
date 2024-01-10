@@ -1,12 +1,10 @@
 {
   "projectId": "TEST-JSON",
   "commitTypes": {
-    "ticket": ["feat", "fix", "chore"],
-    "nonTicket": ["other"]
+    "nonTicket": []
   },
   "branchTypes": {
-    "main": ["master", "develop"],
-    "ticket": ["feature", "bugfix", "hotfix"],
-    "nonTicket": ["other", "release", "support", "chore"]
+    "main": [],
+    "nonTicket": []
   }
 }
