@@ -1,16 +1,15 @@
-const appRoot = require('app-root-path');
-const path = require('path');
-const fs = require('fs');
+const appRoot = require("app-root-path");
+const path = require("path");
+const fs = require("fs");
 
-const logger = require('../logger');
-const dbugger = require('../debugger');
-const constants = require('./constants');
-const reader = require('./reader');
+const logger = require("../logger");
+const constants = require("./constants");
+const reader = require("./reader");
 
 const { getConstants } = constants;
 const ROOT = appRoot.toString();
-const CONFIG_DEFAULT_NAME_JSON = 'hooks.config.json';
-const CONFIG_DEFAULT_NAME_JS = 'hooks.config.js';
+const CONFIG_DEFAULT_NAME_JSON = "hooks.config.json";
+const CONFIG_DEFAULT_NAME_JS = "hooks.config.js";
 
 function useDefaultConfigNames(argsConfigName) {
   return !fs.existsSync(path.join(ROOT, argsConfigName));
@@ -41,22 +40,20 @@ function configExists(argsConfigName) {
   return {
     hasConfig,
     configPath,
-    isJSON: hasConfig
-      ? path.extname(configPath) === '.json'
-      : false,
+    isJSON: hasConfig ? path.extname(configPath) === ".json" : false,
   };
 }
 
 function getConfigFromJSON(configPath) {
   try {
-    const fileString = fs.readFileSync(configPath, 'utf8');
+    const fileString = fs.readFileSync(configPath, "utf8");
     const config = JSON.parse(fileString);
 
-    if (config && typeof config === 'object') {
+    if (config && typeof config === "object") {
       return config;
     }
   } catch (error) {
-    logger.error('Error reading config file');
+    logger.error("Error reading config file");
     console.error(error);
 
     return null;
@@ -74,12 +71,12 @@ function getConfigConstants(projectId, argsConfigName) {
 
   if (!hasConfig) {
     if (!projectId) {
-      logger.error('Config file not found. No project ID provided', '', true);
+      logger.error("Config file not found. No project ID provided", "", true);
     }
 
     const defaultConstants = getConstants();
 
-    logger.info('Config file not found. Using default values');
+    logger.info("Config file not found. Using default values");
 
     return {
       ...defaultConstants,
@@ -87,7 +84,7 @@ function getConfigConstants(projectId, argsConfigName) {
     };
   }
 
-  dbugger.log('Getting config on:', configPath);
+  logger.debug("Getting config on:", configPath);
 
   const config = getConfig(configPath, isJSON);
 

@@ -1,49 +1,50 @@
-const Ajv = require('ajv');
+const Ajv = require("ajv");
 const ajv = new Ajv({ allErrors: true });
 
-const logger = require('../logger');
+const logger = require("../logger");
 
 const schema = {
-  required: ['projectId'],
+  type: "object",
+  required: ["projectId"],
   additionalProperties: false,
   properties: {
     projectId: {
-      type: 'string',
+      type: "string",
     },
     commitTypes: {
-      type: 'object',
+      type: "object",
       maxProperties: 2,
       properties: {
         ticket: {
-          type: 'array',
+          type: "array",
           minItems: 1,
-          items: { type: 'string' },
+          items: { type: "string" },
         },
         nonTicket: {
-          type: 'array',
+          type: "array",
           minItems: 1,
-          items: { type: 'string' },
+          items: { type: "string" },
         },
       },
     },
     branchTypes: {
-      type: 'object',
+      type: "object",
       maxProperties: 3,
       properties: {
         main: {
-          type: 'array',
+          type: "array",
           minItems: 1,
-          items: { type: 'string' },
+          items: { type: "string" },
         },
         ticket: {
-          type: 'array',
+          type: "array",
           minItems: 1,
-          items: { type: 'string' },
+          items: { type: "string" },
         },
         nonTicket: {
-          type: 'array',
+          type: "array",
           minItems: 1,
-          items: { type: 'string' },
+          items: { type: "string" },
         },
       },
     },
@@ -51,12 +52,12 @@ const schema = {
 };
 
 function displayErrors(errors) {
-  logger.error('Configuration is not valid. Using default values.');
+  logger.error("Configuration is not valid. Using default values.");
 
   for (var i = 0; i < errors.length; i++) {
     const error = errors[i];
 
-    console.log(error.dataPath, error.message)
+    console.log(error.dataPath, error.message);
   }
 }
 

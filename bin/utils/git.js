@@ -1,20 +1,23 @@
-const branchName = require('current-git-branch');
-const fs = require('fs');
+const branchName = require("current-git-branch");
+const fs = require("fs");
 
-const dbugger = require('./debugger');
+const logger = require("./logger");
 
 function getCommitMessage(commitFile) {
   let message;
 
   try {
-    message = fs.readFileSync(commitFile, 'utf8').trim();
+    message = fs.readFileSync(commitFile, "utf8").trim();
+
+    logger.debug("Commit message:", message);
+
+    return {
+      firstLine: message.split("\n")[0],
+      fullMessage: message,
+    };
   } catch (e) {
-    console.error('Cannot read commit message file', commitFile);
+    logger.error("Cannot read commit message file", "", true);
   }
-
-  dbugger.log('Commit message:', message);
-
-  return [ message.split('\n')[0], message ];
 }
 
 function modifyCommitMessage(commitFile, newContent) {
@@ -24,10 +27,10 @@ function modifyCommitMessage(commitFile, newContent) {
 function getCurrentBranch() {
   const currentBranch = branchName();
 
-  dbugger.log('Current branch:', currentBranch);
+  logger.debug("Current branch:", currentBranch);
 
   return currentBranch;
-};
+}
 
 module.exports = {
   getCurrentBranch,

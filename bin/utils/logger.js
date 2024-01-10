@@ -1,35 +1,42 @@
-const RESET = '\u001b[0m';
-const BOLD = '\u001b[1m';
-const GRAY = '\u001b[0;90m';
-const GREEN = '\u001b[1;92m';
-const RED = '\u001b[1;31m';
-const YELLOW = '\u001b[1;33m';
-const BLUE = '\u001b[1;34m';
+const argv = require("./argv");
 
-const NEW_LINE = '\n';
-const PREFIX_LOADING = GRAY + '⧗   ' + RESET;
-const PREFIX_SUCCESS = GREEN + '✔   ' + RESET;
-const PREFIX_ERROR = RED + '✖   ' + RESET;
-const PREFIX_WARN = YELLOW + '⚠   ' + RESET;
-const PREFIX_INFO = BLUE + 'ⓘ   ' + RESET;
+const RESET = "\u001b[0m";
+const BOLD = "\u001b[1m";
+const GRAY = "\u001b[0;90m";
+const GREEN = "\u001b[1;92m";
+const RED = "\u001b[1;31m";
+const YELLOW = "\u001b[1;33m";
+const BLUE = "\u001b[1;34m";
+
+const NEW_LINE = "\n";
+const PREFIX_LOADING = GRAY + "⧗   " + RESET;
+const PREFIX_SUCCESS = GREEN + "✔   " + RESET;
+const PREFIX_ERROR = RED + "✖   " + RESET;
+const PREFIX_WARN = YELLOW + "⚠   " + RESET;
+const PREFIX_INFO = BLUE + "ⓘ   " + RESET;
+const PREFIX_DEBUG = BLUE + "[debug]   " + RESET;
 
 function genMessage(type, message, isFinal = false) {
-  let fullMessage = (isFinal ? NEW_LINE : '');
+  let fullMessage = isFinal ? NEW_LINE : "";
+
   switch (type) {
-    case 'loading':
+    case "loading":
       fullMessage += PREFIX_LOADING;
       break;
-    case 'success':
+    case "success":
       fullMessage += PREFIX_SUCCESS;
       break;
-    case 'error':
+    case "error":
       fullMessage += PREFIX_ERROR;
       break;
-    case 'warn':
+    case "warn":
       fullMessage += PREFIX_WARN;
       break;
-    case 'info':
+    case "info":
       fullMessage += PREFIX_INFO;
+      break;
+    case "debug":
+      fullMessage += PREFIX_DEBUG;
       break;
     default:
       fullMessage += BOLD + message + RESET;
@@ -45,22 +52,23 @@ function genMessage(type, message, isFinal = false) {
 }
 
 function genNote(note) {
+  if (!note) {
+    return "";
+  }
+
   return GRAY + note + RESET;
 }
 
 function log(type, message, note, isFinal) {
-  console.log(
-    genMessage(type, message, isFinal),
-    note ? genNote(note) : ''
-  );
+  console.log(genMessage(type, message, isFinal), genNote(note));
 }
 
 function loading(message, note, isFinal) {
-  log('loading', message, note, isFinal);
+  log("loading", message, note, isFinal);
 }
 
 function success(message, note, isFinal) {
-  log('success', message, note, isFinal);
+  log("success", message, note, isFinal);
 
   if (isFinal) {
     process.exit();
@@ -68,7 +76,7 @@ function success(message, note, isFinal) {
 }
 
 function error(message, note, isFinal) {
-  log('error', message, note, isFinal);
+  log("error", message, note, isFinal);
 
   if (isFinal) {
     process.exit(1);
@@ -76,11 +84,17 @@ function error(message, note, isFinal) {
 }
 
 function warn(message, note, isFinal) {
-  log('warn', message, note, isFinal);
+  log("warn", message, note, isFinal);
 }
 
 function info(message, note, isFinal) {
-  log('info', message, note, isFinal);
+  log("info", message, note, isFinal);
+}
+
+function debug(message) {
+  if (argv.debug) {
+    log("debug", message);
+  }
 }
 
 module.exports = {
@@ -89,4 +103,5 @@ module.exports = {
   error,
   warn,
   info,
+  debug,
 };
