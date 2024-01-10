@@ -33,6 +33,7 @@
     "release:beta": "npm run build && npm publish --tag beta"
   },
   "dependencies": {
+    "@babel/runtime": "^7.23.8",
     "app-root-path": "^3.1.0",
     "current-git-branch": "^1.1.0",
     "lodash.merge": "^4.6.2",
@@ -44,7 +45,6 @@
     "@babel/plugin-transform-runtime": "^7.23.7",
     "@babel/preset-env": "^7.23.8",
     "@babel/preset-typescript": "^7.23.3",
-    "@babel/runtime": "^7.23.8",
     "@rollup/plugin-babel": "^6.0.4",
     "@rollup/plugin-commonjs": "^25.0.7",
     "@rollup/plugin-terser": "^0.4.4",
