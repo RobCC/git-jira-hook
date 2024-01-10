@@ -1,4 +1,4 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
-# build/commit-msg.js ${HUSKY_GIT_PARAMS} --debug --projectId TEST
+build/commit-msg.cjs $1 --debug

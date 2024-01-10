@@ -1,9 +1,12 @@
-module.exports = {
-  projectId: 'TEST',
+export default {
+  projectId: 'TEST-JS',
   commitTypes: {
-    nonTicket: ['other', 'test'],
+    ticket: ['feat', 'fix', 'chore'],
+    nonTicket: ['other'],
   },
   branchTypes: {
-    nonTicket: ['release']
-  }
-}
+    main: ['master', 'develop'],
+    ticket: ['feature', 'bugfix', 'hotfix'],
+    nonTicket: ['other', 'release', 'support'],
+  },
+};

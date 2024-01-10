@@ -1,14 +1,14 @@
-const validator = require('../bin/utils/validator');
+import validator from '../bin/utils/validator';
 
 const {
   isSpecialCommit,
   hasCorrectFormat,
   isTicketValid,
   getCommitType,
-  isOtherBranch,
+  isNonTicketBranch,
   isMainBranch,
   getTicketFromBranch,
-  addTicketToCommit
+  addTicketToCommit,
 } = validator;
 
 describe('validator', () => {
@@ -40,7 +40,8 @@ describe('validator', () => {
     });
 
     it('should validate a BREAKING CHANGE commit message', () => {
-      const message = 'BREAKING CHANGE: environment variables now take precedence over config files';
+      const message =
+        'BREAKING CHANGE: environment variables now take precedence over config files';
 
       expect(isSpecialCommit(message)).toBe(true);
     });
@@ -55,7 +56,7 @@ describe('validator', () => {
     });
 
     it('should reject a message with an almost correct format', () => {
-      const message = 'feat(TEST): Messsage';
+      const message = 'feat(TEST): Message';
       const { hasFormat } = hasCorrectFormat(message);
 
       expect(hasFormat).toBe(false);
@@ -63,20 +64,20 @@ describe('validator', () => {
 
     it('should get the type and ticket of a correct message', () => {
       const message = 'feat(TEST-50): Messsage';
-      const { hasFormat, commitType, messageTicket } = hasCorrectFormat(message);
+      const { hasFormat, commitType, ticket } = hasCorrectFormat(message);
 
       expect(hasFormat).toBe(true);
       expect(commitType).toBe('feat');
-      expect(messageTicket).toBe('TEST-50');
+      expect(ticket).toBe('TEST-50');
     });
 
     it('should validate a message with a correct format and without ticket', () => {
       const message = 'randomtype: Messsage';
-      const { hasFormat, commitType, messageTicket } = hasCorrectFormat(message);
+      const { hasFormat, commitType, ticket } = hasCorrectFormat(message);
 
       expect(hasFormat).toBe(true);
       expect(commitType).toBe('randomtype');
-      expect(messageTicket).toBe('');
+      expect(ticket).toBe('');
     });
   });
 
@@ -135,24 +136,24 @@ describe('validator', () => {
     });
   });
 
-  describe('isOtherBranch', () => {
+  describe('isNonTicketBranch', () => {
     const nonTicketBranches = ['other'];
 
     it('should validate for a other branch correctly', () => {
       const branch = 'other/hello';
-      expect(isOtherBranch(branch, nonTicketBranches)).toBe(true);
+      expect(isNonTicketBranch(branch, nonTicketBranches)).toBe(true);
     });
 
     it('should validate for a non other branch correctly', () => {
       const branch = 'feature/hello';
-      const isValid = isOtherBranch(branch, nonTicketBranches);
+      const isValid = isNonTicketBranch(branch, nonTicketBranches);
 
       expect(isValid).toBe(false);
     });
 
     it('should validate for a branch without format', () => {
       const branch = 'hello';
-      const isValid = isOtherBranch(branch, nonTicketBranches);
+      const isValid = isNonTicketBranch(branch, nonTicketBranches);
 
       expect(isValid).toBe(false);
     });
@@ -266,9 +267,8 @@ describe('validator', () => {
         ticketCommitTypes
       );
 
-      const modifiedFirstLine = modifiedMessage.split('\n')[0];
-
-      expect(modifiedFirstLine).toBe(`feat(${ticket}): First commit`);
+      expect(modifiedMessage).toBe(`feat(${ticket}): First commit
+      This is the first commit of the repo.`);
     });
   });
-})
+});

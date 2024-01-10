@@ -1,8 +1,7 @@
-const Ajv = require('ajv');
-const ajv = new Ajv({ allErrors: true });
-const schemaFile = require('../bin/utils/config/schema');
+import Ajv from 'ajv';
+import SCHEMA from '../bin/utils/config/schema';
 
-const { schema } = schemaFile;
+const ajv = new Ajv({ allErrors: true });
 
 describe('config', () => {
   describe('schema', () => {
@@ -20,10 +19,10 @@ describe('config', () => {
         },
       };
 
-      expect(ajv.validate(schema, config)).toBe(true);
+      expect(ajv.validate(SCHEMA, config)).toBe(true);
     });
 
-    it('should validate a correct format with empty attributes as wrong', () => {
+    it('should validate a correct format with empty attributes as correct', () => {
       const config = {
         projectId: 'TEST',
         commitTypes: {
@@ -37,7 +36,7 @@ describe('config', () => {
         },
       };
 
-      expect(ajv.validate(schema, config)).toBe(false);
+      expect(ajv.validate(SCHEMA, config)).toBe(true);
     });
 
     it('should validate a correct config without projectId as wrong', () => {
@@ -53,7 +52,7 @@ describe('config', () => {
         },
       };
 
-      expect(ajv.validate(schema, config)).toBe(false);
+      expect(ajv.validate(SCHEMA, config)).toBe(false);
     });
 
     it('should validate a config with extra attributes as wrong', () => {
@@ -73,7 +72,7 @@ describe('config', () => {
         },
       };
 
-      expect(ajv.validate(schema, config)).toBe(false);
+      expect(ajv.validate(SCHEMA, config)).toBe(false);
     });
   });
-})
+});
