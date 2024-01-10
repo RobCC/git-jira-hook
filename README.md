@@ -2,7 +2,7 @@
 
 ![Example](https://raw.githubusercontent.com/RobCC/git-jira-hook/master/media/example.gif)
 
-This enforces commit messages and branches to be written in a specific format (using **JIRA**), following a similar structure to the conventional commits. This is done through [husky](https://github.com/typicode/husky) and the [`commit-msg`](https://git-scm.com/docs/githooks#_commit_msg) hook.
+Enforces commit messages and branches to be written in a specific format (using **JIRA**), following a similar structure to the conventional commits. This is done through [husky](https://github.com/typicode/husky) and the [`commit-msg`](https://git-scm.com/docs/githooks#_commit_msg) hook.
 
 # Install
 
@@ -116,14 +116,13 @@ The hook will allow special commits such as:
 
 ## Minimal
 
-For minimal configuration, you just need to pass `projectId`. This will be used to ensure that all tickets are based on this id.
+For minimal configuration, you just need to pass `projectId` on the `commit-msg` hook file. This will be used to ensure that all tickets are based on this id.
 
 ```
-"husky": {
-  "hooks": {
-    "commit-msg": "git-jira-hook ${HUSKY_GIT_PARAMS} --projectId MYPROJ"
-  }
-},
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+npx git-jira-hook $1 --projectId MYPROJ
 ```
 
 Based on the configuration above, the following are correct:
@@ -186,10 +185,6 @@ Not complying with these conditions will abort the commit. It will display a mes
 **Important:** These messages show up when commiting from the terminal. If using, for example, VS Code's Source Control, it will show up an alert with a `Open git log` option when an error occurs, where the same messages can be seen (in an uglier format).
 
 ![modal](https://bitbucket.org/jrobcc/hooks-test/raw/24b7c178e7ff7e4c608d6c93cb198cc309f4c073/sample-images/alert.png)
-
-## WIP
-
-- shebags issue when `dynamicRequireTargets` is on.
 
 # Contributing
 
