@@ -1,0 +1,10 @@
+{
+  "projectId": "TEST-JSON",
+  "commitTypes": {
+    "nonTicket": []
+  },
+  "branchTypes": {
+    "main": [],
+    "nonTicket": []
+  }
+}

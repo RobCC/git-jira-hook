@@ -1,2 +1,8 @@
 node_modules
 build
+
+hooks.config.cjs
+hooks.config.fn.cjs
+hooks.config.fn.js
+hooks.config.fn.json
+commit-msg
