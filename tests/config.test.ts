@@ -56,6 +56,31 @@ describe('config', () => {
       expect(ajv.validate(SCHEMA, config)).toBe(true);
     });
 
+    it('should validate an incomplete correct format as correct', () => {
+      const config = {
+        projectId: 'TEST',
+        commitTypes: {
+          nonTicket: [],
+        },
+        branchTypes: {
+          main: [],
+        },
+      };
+
+      expect(ajv.validate(SCHEMA, config)).toBe(true);
+    });
+
+    it('should validate another incomplete correct format as correct', () => {
+      const config = {
+        projectId: 'TEST',
+        commitTypes: {
+          ticket: [],
+        },
+      };
+
+      expect(ajv.validate(SCHEMA, config)).toBe(true);
+    });
+
     it('should validate a correct config without projectId as wrong', () => {
       const config = {
         commitTypes: {

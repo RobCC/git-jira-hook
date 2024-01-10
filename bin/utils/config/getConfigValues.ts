@@ -4,7 +4,7 @@ import merge from 'lodash.merge';
 
 import logger from '../logger';
 import argv from '../argv';
-import SCHEMA from './schema';
+import schema from './schema';
 
 const ajv = new Ajv({ allErrors: true, allowUnionTypes: true });
 
@@ -36,7 +36,7 @@ function displayErrors(errors: ErrorObject[]) {
 }
 
 function isValid(config: UnknownObject) {
-  const isValid = ajv.validate(SCHEMA, config);
+  const isValid = ajv.validate(schema, config);
 
   if (ajv.errors) {
     displayErrors(ajv.errors);
