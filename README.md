@@ -1,6 +1,6 @@
 # git-jira-hook [![version](https://img.shields.io/npm/v/git-jira-hook?color=crimson&style=flat-square)](https://www.npmjs.com/package/git-jira-hook)
 
-![Example](https://raw.githubusercontent.com/RobCC/git-jira-hook/master/media/demo.gif)
+![Example](./media/demo.gif)
 
 Enforces commit messages and branches to be written in a specific format (using **JIRA**), following a similar structure to the conventional commits. This is done through [husky](https://github.com/typicode/husky) and the [`commit-msg`](https://git-scm.com/docs/githooks#_commit_msg) hook.
 
@@ -180,11 +180,11 @@ The [commit-msg](https://git-scm.com/docs/githooks#_commit_msg) hook does job. F
 
 Not complying with these conditions will abort the commit. It will display a message on what did fail:
 
-![log](https://raw.githubusercontent.com/RobCC/git-jira-hook/master/media/log.png)
+![log](./media/log.png)
 
 **Important:** These messages show up when commiting from the terminal. If using, for example, VS Code's Source Control, it will show up an alert with a `Open git log` option when an error occurs, where the same messages can be seen (in an uglier format).
 
-![modal](https://raw.githubusercontent.com/RobCC/git-jira-hook/master/media/alert.png)
+![modal](./media/alert.png)
 
 # Contributing
 
