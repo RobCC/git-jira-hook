@@ -180,11 +180,11 @@ The [commit-msg](https://git-scm.com/docs/githooks#_commit_msg) hook does job. F
 
 Not complying with these conditions will abort the commit. It will display a message on what did fail:
 
-![log](https://bitbucket.org/jrobcc/hooks-test/raw/24b7c178e7ff7e4c608d6c93cb198cc309f4c073/sample-images/log.png)
+![log](https://raw.githubusercontent.com/RobCC/git-jira-hook/master/media/log.png)
 
 **Important:** These messages show up when commiting from the terminal. If using, for example, VS Code's Source Control, it will show up an alert with a `Open git log` option when an error occurs, where the same messages can be seen (in an uglier format).
 
-![modal](https://bitbucket.org/jrobcc/hooks-test/raw/24b7c178e7ff7e4c608d6c93cb198cc309f4c073/sample-images/alert.png)
+![modal](https://raw.githubusercontent.com/RobCC/git-jira-hook/master/media/alert.png)
 
 # Contributing
 
