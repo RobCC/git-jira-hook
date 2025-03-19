@@ -186,6 +186,13 @@ Not complying with these conditions will abort the commit. It will display a mes
 
 ![modal](https://raw.githubusercontent.com/RobCC/git-jira-hook/master/media/alert.png)
 
+# Testing
+
+```shell
+# create a file named `commit-msg`
+npx git-jira-hook commit-msg --debug
+```
+
 # Contributing
 
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
