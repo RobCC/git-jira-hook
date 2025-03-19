@@ -2,7 +2,7 @@ import { COMMIT_MSG_FILE } from './utils/argv';
 import logger from './utils/logger';
 import git from './utils/git';
 import validator from './utils/validator';
-import config from './utils/config';
+import configUtils from './utils/config';
 
 const {
   isSpecialCommit,
@@ -22,8 +22,8 @@ async function commitMsg() {
 
   const { firstLine, fullMessage } = git.getCommitMessage();
   const branch = git.getBranch();
-  const configValues = await config.getConfigConstants();
-  const { projectId, branchTypes } = configValues;
+  const config = await configUtils.getConfigConstants();
+  const { projectId, branchTypes } = config;
 
   if (!projectId) {
     logger.error(
@@ -33,7 +33,7 @@ async function commitMsg() {
     );
   }
 
-  logger.debug('Config values:', configValues);
+  logger.debug('Config values:', config);
   logger.debug('Commit data: ', {
     projectId,
     fullMessage,
@@ -71,22 +71,10 @@ async function commitMsg() {
     );
   }
 
-  if (ticket) {
-    if (isTicketValid(ticket, projectId)) {
-      logger.success('Ticket already in place', '', true);
-    } else {
-      logger.error(
-        `The ticket in the commit message does not match the provided projectId ${projectId}`,
-        `e.g. "feat(${projectId}-0): Description"`,
-        true
-      );
-    }
-  }
-
   const [isTicketType, isNonTicketType] = getCommitType(
     commitType,
-    configValues.commitTypes.ticket,
-    configValues.commitTypes.nonTicket
+    config.commitTypes.ticket,
+    config.commitTypes.nonTicket
   );
 
   logger.debug('Type data: ', { isTicketType, isNonTicketType });
@@ -99,11 +87,23 @@ async function commitMsg() {
     logger.error(
       'The commit message has an incorrect commit type',
       `Commit types available are ${[
-        ...configValues.commitTypes.ticket,
-        ...configValues.commitTypes.nonTicket,
+        ...config.commitTypes.ticket,
+        ...config.commitTypes.nonTicket,
       ].join(', ')}`,
       true
     );
+  }
+
+  if (ticket) {
+    if (isTicketValid(ticket, projectId)) {
+      logger.success('Ticket already in place', '', true);
+    } else {
+      logger.error(
+        `The ticket in the commit message does not match the provided projectId ${projectId}`,
+        `e.g. "feat(${projectId}-0): Description"`,
+        true
+      );
+    }
   }
 
   logger.warn('Jira ticket is not on the commit message');
@@ -137,7 +137,7 @@ async function commitMsg() {
       'Branches may include an optional description after the ticket',
       `${branchTypes.ticket[0] || 'feature'}/${projectId}-description`
     );
-    logger.error('Ticket name not found on branch. Please add one.', '', true);
+    logger.error('Ticket name not found on branch. Please add one', '', true);
   }
 
   logger.loading('Adding ticket to commit message', branchTicket);
@@ -146,7 +146,7 @@ async function commitMsg() {
     firstLine,
     fullMessage,
     branchTicket,
-    configValues.commitTypes.ticket
+    config.commitTypes.ticket
   );
 
   git.modifyCommitMessage(newFullMessage);
