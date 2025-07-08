@@ -193,6 +193,11 @@ Not complying with these conditions will abort the commit. It will display a mes
 npx git-jira-hook commit-msg --debug
 ```
 
+Additionally:
+
+1. Build with `npm run build`
+2. Run test on `build.test.ts`
+
 # Contributing
 
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.

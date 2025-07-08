@@ -77,7 +77,7 @@ function getCommitType(
  * @param branch - Current branch name.
  * @param nonTicketBranches - List of branch types that should have ticket.
  */
-function isNonTicketBranch(branch: string, nonTicketBranches: string[]) {
+function isBranchOfType(branch: string, nonTicketBranches: string[]) {
   const regex = new RegExp(`^\\b(${nonTicketBranches.join('|')})\\b\\/.+?$`);
 
   return !!branch.match(regex);
@@ -158,7 +158,7 @@ export default {
   hasCorrectFormat,
   isTicketValid,
   getCommitType,
-  isNonTicketBranch,
+  isBranchOfType,
   isMainBranch,
   getTicketFromBranch,
   addTicketToCommit,

@@ -6,6 +6,9 @@ const argv = yargs(hideBin(process.argv))
     config: { type: 'string', default: '' },
     debug: { type: 'boolean', default: false },
     projectId: { type: 'string' },
+    // For debugging purposes
+    branch: { type: 'string', default: '' },
+    commitMessage: { type: 'string', default: '' },
   })
   .parseSync();
 

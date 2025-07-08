@@ -5,7 +5,7 @@ const {
   hasCorrectFormat,
   isTicketValid,
   getCommitType,
-  isNonTicketBranch,
+  isBranchOfType,
   isMainBranch,
   getTicketFromBranch,
   addTicketToCommit,
@@ -149,24 +149,24 @@ describe('validator', () => {
     });
   });
 
-  describe('isNonTicketBranch', () => {
+  describe('isBranchOfType', () => {
     const nonTicketBranches = ['other'];
 
     it('should validate for a other branch correctly', () => {
       const branch = 'other/hello';
-      expect(isNonTicketBranch(branch, nonTicketBranches)).toBe(true);
+      expect(isBranchOfType(branch, nonTicketBranches)).toBe(true);
     });
 
     it('should validate for a non other branch correctly', () => {
       const branch = 'feature/hello';
-      const isValid = isNonTicketBranch(branch, nonTicketBranches);
+      const isValid = isBranchOfType(branch, nonTicketBranches);
 
       expect(isValid).toBe(false);
     });
 
     it('should validate for a branch without format', () => {
       const branch = 'hello';
-      const isValid = isNonTicketBranch(branch, nonTicketBranches);
+      const isValid = isBranchOfType(branch, nonTicketBranches);
 
       expect(isValid).toBe(false);
     });

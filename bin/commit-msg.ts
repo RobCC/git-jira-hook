@@ -10,7 +10,7 @@ const {
   hasCorrectFormat,
   isTicketValid,
   getCommitType,
-  isNonTicketBranch,
+  isBranchOfType,
   getTicketFromBranch,
   addTicketToCommit,
 } = validator;
@@ -51,6 +51,17 @@ async function commitMsg() {
     logger.error(
       'Cannot commit directly to the following branches',
       branchTypes.main.join(', '),
+      true
+    );
+  }
+
+  const isNonTicketBranch = isBranchOfType(branch, branchTypes.nonTicket);
+  const isTicketBranch = isBranchOfType(branch, branchTypes.ticket);
+
+  if (!isNonTicketBranch && !isTicketBranch) {
+    logger.error(
+      'Branch does not match any of the types on the config file',
+      `${branchTypes.ticket.join(', ')}, ${branchTypes.nonTicket.join(', ')}`,
       true
     );
   }
@@ -108,7 +119,7 @@ async function commitMsg() {
 
   logger.warn('Jira ticket is not on the commit message');
 
-  if (isNonTicketBranch(branch, branchTypes.nonTicket)) {
+  if (isNonTicketBranch) {
     logger.success(
       'Working on a non JIRA related branch, no need to add ticket',
       '',
