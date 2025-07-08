@@ -2,7 +2,7 @@ import branchName from 'current-git-branch';
 import fs from 'fs';
 
 import logger from './logger';
-import { COMMIT_MSG_FILE } from './argv';
+import args, { COMMIT_MSG_FILE } from './argv';
 
 /** Writes new content onto the commit message file. */
 function modifyCommitMessage(newContent: string) {
@@ -12,6 +12,12 @@ function modifyCommitMessage(newContent: string) {
 /** Returns the current git branch. */
 function getBranch() {
   const currentBranch = branchName();
+
+  if (args.debug && args.branch) {
+    logger.debug('Passing arg branch for debugging:', args.branch);
+
+    return args.branch;
+  }
 
   logger.debug('Current branch:', currentBranch);
 
@@ -23,7 +29,16 @@ function getCommitMessage() {
   let fullMessage;
 
   try {
-    fullMessage = fs.readFileSync(COMMIT_MSG_FILE, 'utf8').trim();
+    if (args.debug && args.commitMessage) {
+      logger.debug(
+        'Passing arg commitMessage for debugging:',
+        args.commitMessage
+      );
+
+      fullMessage = args.commitMessage;
+    } else {
+      fullMessage = fs.readFileSync(COMMIT_MSG_FILE, 'utf8').trim();
+    }
 
     logger.debug('Commit message:', fullMessage);
 

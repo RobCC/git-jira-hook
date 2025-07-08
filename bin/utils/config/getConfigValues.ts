@@ -1,6 +1,5 @@
 import type { ErrorObject } from 'ajv';
 import Ajv from 'ajv';
-import merge from 'lodash.merge';
 
 import logger from '../logger';
 import argv from '../argv';
@@ -47,7 +46,7 @@ function isValid(config: UnknownObject): config is Config {
 
 function getConfigValues(config: UnknownObject): ConfigValues {
   if (config && isValid(config)) {
-    return merge(DEFAULT_VALUES, config);
+    return config as ConfigValues;
   }
 
   logger.error('Configuration is not valid. Using default values.');
